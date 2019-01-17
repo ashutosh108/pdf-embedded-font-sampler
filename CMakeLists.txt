@@ -2,9 +2,12 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(pdf-embedded-font-sampler LANGUAGES CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/vendor/extra-cmake-modules/find-modules")
-find_package(poppler REQUIRED)
+find_package(poppler REQUIRED COMPONENTS Cpp)
 
 add_executable(pdf-embedded-font-sampler src/main.cpp)
+target_include_directories(pdf-embedded-font-sampler PRIVATE ${Poppler_INCLUDE_DIRS})
+target_link_libraries(pdf-embedded-font-sampler ${Poppler_LIBRARIES})
+
 if(MSVC)
     set(WARN_FLAGS ${WARN_FLAGS} /permissive- /W4
         /WX
